@@ -24,7 +24,7 @@ class SurveyController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        return SurveyResource::collection(Survey::where('user_id', $user->id)->paginate(50));
+        return SurveyResource::collection(Survey::where('user_id', $user->id)->paginate(5));
     }
 
     /**
@@ -67,6 +67,17 @@ class SurveyController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
+        return new SurveyResource($survey);
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Survey  $survey
+     * @return \Illuminate\Http\Response
+     */
+    public function showForGuest(Survey $survey)
+    {
         return new SurveyResource($survey);
     }
 
